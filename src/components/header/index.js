@@ -1,13 +1,15 @@
 import React from 'react';
 
-class Header extends React.Component {
-  render() {
+function Header () {
+  
     return (
+      <>
       <header>
-        <h1>RESTy</h1>
+        <h1>RESTy NOFAl</h1>
       </header>
+      </>
     );
-  }
+  
 }
 
 export default Header;
