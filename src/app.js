@@ -1,5 +1,5 @@
 import React from 'react';
-
+import axios from 'axios';
 import './app.scss';
 
 // Let's talk about using index.js and some other name in the component folder
@@ -16,19 +16,33 @@ class App extends React.Component {
     this.state = {
       data: null,
       requestParams: {},
+      result:[]
     };
   }
 
   callApi = (requestParams) => {
     // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
+    console.log(requestParams);
+    let reqBody=requestParams.reqBody
+    let method=requestParams.method
+    let url=requestParams.url
+    if(method=='post'||method=='put'){
+      axios[method](url,reqBody).then(result=>{
+        this.setState({
+          result:result.data,
+          requestParams:requestParams
+        })
+      })
+    }else{
+      axios[method](url).then(result=>{
+        this.setState({
+          result:result.data,
+          requestParams:requestParams
+        })
+        console.log(result);
+      })
+    }
+     
   }
 
   render() {
@@ -38,7 +52,7 @@ class App extends React.Component {
         <div>Request Method: {this.state.requestParams.method}</div>
         <div>URL: {this.state.requestParams.url}</div>
         <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
+        <Results data={this.state.result} />
         <Footer />
       </React.Fragment>
     );

@@ -1,10 +1,12 @@
 import React from 'react';
-
+import './result.scss';
 function Results (props){
 
     return (
       <section>
-        <pre>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
+        <div id="ss">
+        <pre >{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
+        </div>
       </section>
     );
 
