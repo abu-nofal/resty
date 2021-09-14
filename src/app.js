@@ -14,6 +14,7 @@ function  App (props) {
 
   const [requestParams,setRequestParams]=useState({})
   const [result,setResult]=useState([])
+  const [render,setRender]=useState('')
 
    const callApi = (requestParams) => {
     // mock output
@@ -37,12 +38,18 @@ function  App (props) {
      
   }
 
+  useEffect(() => {
+
+      setRender(`method : ${requestParams.method}, URL : ${requestParams.url}`)
+    })
+
  
     return (
       <React.Fragment>
         <Header />
         <div>Request Method: {requestParams.method}</div>
         <div>URL: {requestParams.url}</div>
+        <div>i run from useEffect : {render}</div>
         <Form handleApiCall={callApi} />
         <Results data={result} />
         <Footer />
