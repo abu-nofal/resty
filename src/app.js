@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './app.scss';
+import { useState ,useEffect } from 'react';
 
 // Let's talk about using index.js and some other name in the component folder
 // There's pros and cons for each way of doing this ...
@@ -9,54 +10,45 @@ import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-class App extends React.Component {
+function  App (props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-      result:[]
-    };
-  }
+  const [requestParams,setRequestParams]=useState({})
+  const [result,setResult]=useState([])
 
-  callApi = (requestParams) => {
+   const callApi = (requestParams) => {
     // mock output
     console.log(requestParams);
     let reqBody=requestParams.reqBody
     let method=requestParams.method
     let url=requestParams.url
     if(method=='post'||method=='put'){
-      axios[method](url,reqBody).then(result=>{
-        this.setState({
-          result:result.data,
-          requestParams:requestParams
-        })
+      axios[method](url,reqBody).then(results=>{
+        setResult([...result,results.data])
+        setRequestParams({...requestParams,requestParams})
+        //  requestParams:requestParams
       })
     }else{
-      axios[method](url).then(result=>{
-        this.setState({
-          result:result.data,
-          requestParams:requestParams
-        })
+      axios[method](url).then(results=>{
+        setResult([...result,results.data])
+        setRequestParams({...requestParams,requestParams})
         console.log(result);
       })
     }
      
   }
 
-  render() {
+ 
     return (
       <React.Fragment>
         <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.result} />
+        <div>Request Method: {requestParams.method}</div>
+        <div>URL: {requestParams.url}</div>
+        <Form handleApiCall={callApi} />
+        <Results data={result} />
         <Footer />
       </React.Fragment>
     );
-  }
+ 
 }
 
 export default App;

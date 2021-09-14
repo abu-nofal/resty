@@ -25,7 +25,7 @@ function Form (props) {
 
      
         <form onSubmit={handleSubmit}>
-        <label className="methods" for='select' > select hte method you want </label>
+        <label className="methods" htmlFor='select' > select hte method you want </label>
             <select name="select" id='select'> 
             <option id="get" value='get'>GET</option>
             <option id="post" value='post'>POST</option>
@@ -38,10 +38,7 @@ function Form (props) {
             <input name='url' type='text' id='url'/>
             <button type="submit">GO!</button>
           </label>
-          <textarea id="text" name="text" rows="4" cols="50">
-              write the json for post ,put method,,,
-              
-              for test get :https://pokeapi.co/api/v2/pokemon
+          <textarea id="text" name="text" rows="4" cols="50" defaultValue=' {write the json for post ,put method,,,}'>
             </textarea>
           
         </form>
