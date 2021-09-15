@@ -28,6 +28,7 @@ function Form (props) {
       reqBody:reqBody
     };
    props.handleApiCall(formData);
+   e.target.reset()
   }
 
 
